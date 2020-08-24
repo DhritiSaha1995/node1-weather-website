@@ -16,7 +16,7 @@ const forecast= (lat, long, callback)=>{
                       var temp = response.body.current.temperature;
                       var precip = response.body.current.precip;
                      
-                      callback(undefined, response.body.current.weather_descriptions[0]+" . It is currently "+temp+" degrees out. There is a "+precip+"% chance of rain. The humidity is " +response.body.current.humidity);
+                      callback(undefined, response.body.current.weather_descriptions[0]+" . It feels like " +response.body.current.feelslike+". It is currently "+temp+" degrees out. There is a "+precip+"% chance of rain. The humidity is " +response.body.current.humidity+ "%");
             }
     
         })
