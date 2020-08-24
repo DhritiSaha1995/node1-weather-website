@@ -11,11 +11,12 @@ const forecast= (lat, long, callback)=>{
                    
                  callback("Please specify correct input.")
                }
-               else{
+               else{  
+                     
                       var temp = response.body.current.temperature;
                       var precip = response.body.current.precip;
                      
-                      callback(undefined, response.body.current.weather_descriptions[0]+" . It is currently "+temp+" degrees out. There is a "+precip+"% chance of rain.");
+                      callback(undefined, response.body.current.weather_descriptions[0]+" . It is currently "+temp+" degrees out. There is a "+precip+"% chance of rain. The humidity is " +response.body.current.humidity);
             }
     
         })

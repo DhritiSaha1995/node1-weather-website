@@ -43,9 +43,9 @@ app.get('', (req, res) => {
 })
 
 app.get('/help', (req, res) => {
-    //res.render('help', { title:'Help Page!', name: "Avik"})
-    res.send({name: "avilk"})
-   console.log(req)
+    res.render('help', { title:'Help Page!', name: "Dhriti"})
+   // res.send({name: "avilk"})
+   //console.log(req)
 
 })
 
