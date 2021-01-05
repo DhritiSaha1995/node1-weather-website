@@ -8,10 +8,15 @@ const forecast= (lat, long, callback)=>{
                   callback("Unable to connect.");
                }
                else if(response.body.error){
+                   console.log('sdfghjkl;')
+                  
                    
                  callback("Please specify correct input.")
                }
+               
                else{  
+
+                console.log('abcdey')
                      
                       var temp = response.body.current.temperature;
                       var precip = response.body.current.precip;

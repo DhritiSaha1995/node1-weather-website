@@ -22,7 +22,12 @@ hbs.registerPartials(partialPath)
 
 
 // Setting static directory
-app.use(express.static(DirectoryName))
+app.use(express.static(DirectoryName));
+
+app.use((req, res, next)=>{
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+})
 
 
 //Send back Html data and send json data
@@ -61,6 +66,7 @@ res.render('about', {
 })
 
 app.get('/weather', (req, res) => {
+    console.log(req)
 
     //res.send('This displays current weather!')
     // res.send([{
@@ -69,37 +75,82 @@ app.get('/weather', (req, res) => {
     // }, {
     //     name: 'Avik'
     // } ])
-    console.log(req.query);
-    if(!req.query.address){
-        return res.send({
-            error: "Must provide location."
-        })
-    }
-
-    geocode(req.query.address, (error, {latitude, longitude, location} = {})=>{
-        if(error){
-            return res.send({
-                error: "Must provide location."
-            })
-        }
-        
-        forecast(latitude, longitude, (error, data) => {
-          if(error){
-            return res.send({
-                error: "Must provide a valid location."
-            })
-          }
-          res.send({
-            forecast: data, location,
+   
+    // if(!req.query.address){
+    //     return res.send({
+    //         error: "Must provide location."
+    //     })
+    // }
+    // adding new code
+    if(req.query.address){
+        geocode(req.query.address, (error, {latitude, longitude, location} = {})=>{
+            if(error){
+                return res.send({
+                    error: "Must provide location."
+                })
+            }
             
-            address: req.query.address
-        })
+            forecast(latitude, longitude, (error, data) => {
+              if(error){
+                return res.send({
+                    error: "Must provide a valid location."
+                })
+              }
+              res.send({
+                forecast: data, location,
+                
+                address: req.query.address
+            })
+           
+         })
+      
+         
+             
+         })
        
-     })
+
+    }
+    else{
+        forecast(req.query.latitude, req.query.longitude, (error, data) => {
+            console.log(req.query.latitude)
+            console.log(req.query.longitude)
+            console.log(data)
+            console.log(error)
+            if(error){
+              return res.send({
+                  error: "Must provide a valid location."
+              })
+            }
+            res.send({
+               forecast: data
+            })
+         
+       })
+    }
+    // geocode(req.query.address, (error, {latitude, longitude, location} = {})=>{
+    //     if(error){
+    //         return res.send({
+    //             error: "Must provide location."
+    //         })
+    //     }
+        
+    //     forecast(latitude, longitude, (error, data) => {
+    //       if(error){
+    //         return res.send({
+    //             error: "Must provide a valid location."
+    //         })
+    //       }
+    //       res.send({
+    //         forecast: data, location,
+            
+    //         address: req.query.address
+    //     })
+       
+    //  })
   
      
          
-     })
+    //  })
   
 })
 
